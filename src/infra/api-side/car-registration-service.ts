@@ -1,7 +1,6 @@
-import { CarRegistration } from "../../domain/entities/car-registrations"
-import httpSideApiProvider from "./config/axios"
-import resourses from "./config/resourses"
-
+import { CarRegistration } from '../../domain/entities/car-registrations'
+import httpSideApiProvider from './config/axios'
+import resourses from './config/resourses'
 
 class CarRegistrationService {
   async loadCarRegistration(): Promise<CarRegistration[]> {
@@ -19,7 +18,10 @@ class CarRegistrationService {
   }
 
   async updateQuestion(params: CarRegistrationService.updateQuestion) {
-    return await httpSideApiProvider.put(`${resourses.carRegistration}/${params.id}`, params)
+    return await httpSideApiProvider.put(
+      `${resourses.carRegistration}/${params.id}`,
+      params
+    )
   }
 
   async deleteCarRegistration(
@@ -30,12 +32,11 @@ class CarRegistrationService {
     )
     return data
   }
-
 }
 
 export namespace CarRegistrationService {
-  export type deleteById ={
-    id:string
+  export type deleteById = {
+    id: string
   }
   export type loadById = {
     id: string
@@ -43,4 +44,4 @@ export namespace CarRegistrationService {
   export type updateQuestion = Partial<CarRegistration>
 }
 
-export default new CarRegistrationService()
+export default CarRegistrationService

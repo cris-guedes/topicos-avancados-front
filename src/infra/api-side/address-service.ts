@@ -1,7 +1,6 @@
-import { Address } from "../../domain/entities/addres"
-import httpSideApiProvider from "./config/axios"
-import resourses from "./config/resourses"
-
+import { Address } from '../../domain/entities/addres'
+import httpSideApiProvider from './config/axios'
+import resourses from './config/resourses'
 
 class AddressService {
   async loadAddress(): Promise<Address[]> {
@@ -9,9 +8,7 @@ class AddressService {
     return data
   }
 
-  async loadAddressById(
-    params: AddressService.loadById
-  ): Promise<Address> {
+  async loadAddressById(params: AddressService.loadById): Promise<Address> {
     const { data } = await httpSideApiProvider.get(
       `${resourses.address}/${params.id}`
     )
@@ -19,23 +16,23 @@ class AddressService {
   }
 
   async updateAddress(params: AddressService.updateAddress) {
-    return await httpSideApiProvider.put(`${resourses.address}/${params.id}`, params)
+    return await httpSideApiProvider.put(
+      `${resourses.address}/${params.id}`,
+      params
+    )
   }
 
-  async deleteAddress(
-    params: AddressService.deleteById
-  ): Promise<Address> {
+  async deleteAddress(params: AddressService.deleteById): Promise<Address> {
     const { data } = await httpSideApiProvider.delete(
       `${resourses.address}/${params.id}`
     )
     return data
   }
-
 }
 
 export namespace AddressService {
-  export type deleteById ={
-    id:string
+  export type deleteById = {
+    id: string
   }
   export type loadById = {
     id: string
@@ -43,4 +40,4 @@ export namespace AddressService {
   export type updateAddress = Partial<Address>
 }
 
-export default new AddressService()
+export default AddressService
