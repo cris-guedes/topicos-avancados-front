@@ -1,13 +1,17 @@
+import makeLoadVehicleByColor from '../../../src/domain/useCases/loadVehicleByColor'
+import makeLoadVehiclesByPlateNumber from '../../../src/domain/useCases/loadVehicleByPlateNumber'
+import makeLoadVehiclesByType from '../../../src/domain/useCases/loadVehicleByType'
+
 export const vehicleResolver = {
   Query: {
-    loadVehicleByColor(color: String) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+    loadVehicleByColor(color: string) {
+      return makeLoadVehicleByColor().execute(color)
     },
     loadVehicleByType(type: string) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+      return makeLoadVehiclesByType().execute(type)
     },
-    loadVehicleByPlateNumber(plateNumber: String) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+    loadVehicleByPlateNumber(plateNumber: string) {
+      return makeLoadVehiclesByPlateNumber().execute(plateNumber)
     }
   }
 }

@@ -15,6 +15,33 @@ class VehicleService {
     return data
   }
 
+  async loadVehiclesByColor(
+    params: VehicleService.loadByColor
+  ): Promise<Vehicle[]> {
+    const { data } = await httpCoreApiProvider.get(
+      `${resourses.vehicle}/?color=${params.color}`
+    )
+    return data
+  }
+
+  async loadVehiclesByType(
+    params: VehicleService.loadByType
+  ): Promise<Vehicle[]> {
+    const { data } = await httpCoreApiProvider.get(
+      `${resourses.vehicle}/?type=${params.type}`
+    )
+    return data
+  }
+
+  async loadVehiclesByPlateNumber(
+    params: VehicleService.loadByPlateNumber
+  ): Promise<Vehicle[]> {
+    const { data } = await httpCoreApiProvider.get(
+      `${resourses.vehicle}/?plate=${params.plate}`
+    )
+    return data
+  }
+
   async updateVehicle(params: VehicleService.updateVehicle) {
     return await httpCoreApiProvider.put(
       `${resourses.vehicle}/${params.id}`,
@@ -36,6 +63,15 @@ export namespace VehicleService {
   }
   export type loadById = {
     id: string
+  }
+  export type loadByColor = {
+    color: string
+  }
+  export type loadByType = {
+    type: string
+  }
+  export type loadByPlateNumber = {
+    plate: string
   }
   export type updateVehicle = Partial<Vehicle>
 }

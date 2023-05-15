@@ -1,26 +1,31 @@
 import makeCreateReport from '../../../src/domain/useCases/createReport'
+import makeDeleteReportById from '../../../src/domain/useCases/deleteReportById'
+import makeLoadReportById from '../../../src/domain/useCases/loadReportById'
+import makeLoadReportByCityName from '../../../src/domain/useCases/loadReportsByCityName'
+import makeLoadReportByPeriod from '../../../src/domain/useCases/loadReportsByPeriod'
+import makeUpdateReportById from '../../../src/domain/useCases/updateReportById'
 
 export const reportResolver = {
   Query: {
-    loadReportsByCityName(city: String) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+    loadReportsByCityName(city: string) {
+      return makeLoadReportByCityName().execute(city)
     },
-    loadReportsByPeriod(period: String) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+    loadReportsByPeriod(period: string) {
+      return makeLoadReportByPeriod().execute(period)
     },
-    loadReportById(id: String) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+    loadReportById(reportId: string) {
+      return makeLoadReportById().execute(reportId)
     }
   },
   Mutation: {
     createReport(report: any) {
       return makeCreateReport().execute(report)
     },
-    deleteReportById(reportId: String) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+    deleteReportById(reportId: string) {
+      return makeDeleteReportById().execute(reportId)
     },
-    updateReportById(reportId: String) {
-      return { id: 1, name: 'John Smith', status: 'cached' }
+    updateReportById(reportId: string) {
+      return makeUpdateReportById().execute(reportId)
     }
   }
 }

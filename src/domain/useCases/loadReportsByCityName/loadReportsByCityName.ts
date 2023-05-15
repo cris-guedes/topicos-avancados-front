@@ -1,9 +1,9 @@
 import ReportService from '../../../infra/api-core/report-resourse'
 
-export class dd {
+export class LoadReportsByCityName {
   constructor(private readonly reportProvider: ReportService) {}
 
-  async execute(id: string) {
-    return this.reportProvider.loadReportById({ id })
+  async execute(city: string) {
+    return await this.reportProvider.loadReportsByCityName({ city })
   }
 }

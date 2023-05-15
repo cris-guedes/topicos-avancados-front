@@ -14,6 +14,23 @@ class ReportService {
     )
     return data
   }
+  async loadReportsByCityName(
+    params: ReportService.loadByCityName
+  ): Promise<Report[]> {
+    const { data } = await httpCoreApiProvider.get(
+      `${resourses.report}/?city=${params.city}`
+    )
+    return data
+  }
+
+  async loadReportsByPeriod(
+    params: ReportService.loadByPeriod
+  ): Promise<Report[]> {
+    const { data } = await httpCoreApiProvider.get(
+      `${resourses.report}/?period=${params.period}`
+    )
+    return data
+  }
 
   async createReport(params: ReportService.createReport) {
     return await httpCoreApiProvider.post(
@@ -43,6 +60,12 @@ export namespace ReportService {
   }
   export type loadById = {
     id: string
+  }
+  export type loadByCityName = {
+    city: string
+  }
+  export type loadByPeriod = {
+    period: string
   }
   export type updateReport = Partial<Report>
   export type createReport = Partial<Report>

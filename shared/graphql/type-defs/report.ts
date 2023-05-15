@@ -20,7 +20,7 @@ export const reportType = gql`
   type Query {
     loadReportsByPeriod(period: String): [Report]
     loadReportsByCityName(city: String): [Report]
-    loadReportById(id: String): Report
+    loadReportById(reportId: String): Report
   }
   type Mutation {
     createReport(report: InputReport): Report
