@@ -1,4 +1,4 @@
 export default {
-  report: '/report',
-  vehicle: '/vehicle'
+  report: '/boletins',
+  vehicle: '/veiculos'
 }

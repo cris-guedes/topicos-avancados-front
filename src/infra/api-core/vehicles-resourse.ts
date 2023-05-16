@@ -19,7 +19,7 @@ class VehicleService {
     params: VehicleService.loadByColor
   ): Promise<Vehicle[]> {
     const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}/?color=${params.color}`
+      `${resourses.vehicle}/?cor=${params.color}`
     )
     return data
   }
@@ -28,7 +28,7 @@ class VehicleService {
     params: VehicleService.loadByType
   ): Promise<Vehicle[]> {
     const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}/?type=${params.type}`
+      `${resourses.vehicle}/?tipo=${params.type}`
     )
     return data
   }
@@ -37,7 +37,7 @@ class VehicleService {
     params: VehicleService.loadByPlateNumber
   ): Promise<Vehicle[]> {
     const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}/?plate=${params.plate}`
+      `${resourses.vehicle}/?placa=${params.plate}`
     )
     return data
   }

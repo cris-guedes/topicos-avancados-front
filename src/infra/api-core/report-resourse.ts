@@ -17,19 +17,26 @@ class ReportService {
   async loadReportsByCityName(
     params: ReportService.loadByCityName
   ): Promise<Report[]> {
-    const { data } = await httpCoreApiProvider.get(
-      `${resourses.report}/?city=${params.city}`
+    const { data, request } = await httpCoreApiProvider.get(
+      `${resourses.report}/?cidade=${params.city}`
     )
+
     return data
   }
 
   async loadReportsByPeriod(
     params: ReportService.loadByPeriod
   ): Promise<Report[]> {
-    const { data } = await httpCoreApiProvider.get(
-      `${resourses.report}/?period=${params.period}`
-    )
-    return data
+    console.log('passou aqui')
+    try {
+      const { data, request } = await httpCoreApiProvider.get(
+        `${resourses.report}?periodo=${params.period}`
+      )
+      console.log(request)
+      return data
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async createReport(params: ReportService.createReport) {

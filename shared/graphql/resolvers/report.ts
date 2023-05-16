@@ -1,4 +1,5 @@
 import makeCreateReport from '../../../src/domain/useCases/createReport'
+import { CreateReportDTO } from '../../../src/domain/useCases/createReport/createReportDTO'
 import makeDeleteReportById from '../../../src/domain/useCases/deleteReportById'
 import makeLoadReportById from '../../../src/domain/useCases/loadReportById'
 import makeLoadReportByCityName from '../../../src/domain/useCases/loadReportsByCityName'
@@ -7,24 +8,24 @@ import makeUpdateReportById from '../../../src/domain/useCases/updateReportById'
 
 export const reportResolver = {
   Query: {
-    loadReportsByCityName(city: string) {
+    loadReportsByCityName(_, { city }) {
       return makeLoadReportByCityName().execute(city)
     },
-    loadReportsByPeriod(period: string) {
-      return makeLoadReportByPeriod().execute(period)
+    async loadReportsByPeriod(_, { period }) {
+      return await makeLoadReportByPeriod().execute(period)
     },
-    loadReportById(reportId: string) {
+    loadReportById(_, { reportId }) {
       return makeLoadReportById().execute(reportId)
     }
   },
   Mutation: {
-    createReport(report: any) {
+    createReport(_, { report }) {
       return makeCreateReport().execute(report)
     },
-    deleteReportById(reportId: string) {
+    deleteReportById(_, { reportId }) {
       return makeDeleteReportById().execute(reportId)
     },
-    updateReportById(reportId: string) {
+    updateReportById(__, { reportId }) {
       return makeUpdateReportById().execute(reportId)
     }
   }

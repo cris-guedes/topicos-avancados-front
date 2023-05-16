@@ -4,13 +4,13 @@ import makeLoadVehiclesByType from '../../../src/domain/useCases/loadVehicleByTy
 
 export const vehicleResolver = {
   Query: {
-    loadVehicleByColor(color: string) {
+    loadVehicleByColor(_, { color }) {
       return makeLoadVehicleByColor().execute(color)
     },
-    loadVehicleByType(type: string) {
+    loadVehicleByType(_, { type }) {
       return makeLoadVehiclesByType().execute(type)
     },
-    loadVehicleByPlateNumber(plateNumber: string) {
+    loadVehicleByPlateNumber(_, { plateNumber }) {
       return makeLoadVehiclesByPlateNumber().execute(plateNumber)
     }
   }
