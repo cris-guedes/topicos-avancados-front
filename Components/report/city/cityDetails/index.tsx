@@ -1,17 +1,17 @@
-import { useRouter } from 'next/router'
 import { Report } from '../../../../src/domain/entities/report'
 
 type Props = {
-  reports: Report
+  reports: Report[]
 }
 
-function ReportByCityDetails() {
-  const route = useRouter()
-
-  const cityName = route.query.city
+function ReportByCityDetails({ reports }: Props) {
   return (
     <div>
-      <h1>{cityName}</h1>
+      <h1>
+        {reports.map((report) => (
+          <>{report.id}</>
+        ))}
+      </h1>
       <div></div>
     </div>
   )

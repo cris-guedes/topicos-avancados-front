@@ -3,9 +3,12 @@ import httpCoreApiProvider from './config/axios'
 import resourses from './config/resourses'
 
 class ReportService {
-  async loadReport(): Promise<Report[]> {
-    const { data } = await httpCoreApiProvider.get(resourses.report)
-    return data
+  async loadReports(): Promise<Report[]> {
+    try {
+      const { data, request } = await httpCoreApiProvider.get(resourses.report)
+      console.log(request)
+      return data
+    } catch (e) {}
   }
 
   async loadReportById(params: ReportService.loadById): Promise<Report> {
@@ -32,7 +35,7 @@ class ReportService {
       const { data, request } = await httpCoreApiProvider.get(
         `${resourses.report}?periodo=${params.period}`
       )
-      console.log(request)
+      console.log(data)
       return data
     } catch (e) {
       console.log(e)

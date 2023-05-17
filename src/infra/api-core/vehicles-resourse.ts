@@ -3,9 +3,14 @@ import httpCoreApiProvider from './config/axios'
 import resourses from './config/resourses'
 
 class VehicleService {
-  async loadVehicle(): Promise<Vehicle[]> {
-    const { data } = await httpCoreApiProvider.get(resourses.vehicle)
-    return data
+  async loadVehicles(): Promise<Vehicle[]> {
+    try {
+      const { data, request } = await httpCoreApiProvider.get(resourses.vehicle)
+      console.log(request)
+      return data
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async loadVehicleById(params: VehicleService.loadById): Promise<Vehicle> {
@@ -19,7 +24,7 @@ class VehicleService {
     params: VehicleService.loadByColor
   ): Promise<Vehicle[]> {
     const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}/?cor=${params.color}`
+      `${resourses.vehicle}?color=${params.color}`
     )
     return data
   }
@@ -28,7 +33,7 @@ class VehicleService {
     params: VehicleService.loadByType
   ): Promise<Vehicle[]> {
     const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}/?tipo=${params.type}`
+      `${resourses.vehicle}?tipo=${params.type}`
     )
     return data
   }
@@ -37,7 +42,7 @@ class VehicleService {
     params: VehicleService.loadByPlateNumber
   ): Promise<Vehicle[]> {
     const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}/?placa=${params.plate}`
+      `${resourses.vehicle}?placa=${params.plate}`
     )
     return data
   }

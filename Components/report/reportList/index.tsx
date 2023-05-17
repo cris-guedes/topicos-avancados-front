@@ -4,11 +4,17 @@ type Props = {
   reports: Report[]
 }
 
-function ReportList() {
+function ReportList({ reports }: Props) {
   return (
     <div>
       <h1>ReportList</h1>
-      <div></div>
+      <div>
+        <ul>
+          {reports.map((report) => (
+            <li>{report.id}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

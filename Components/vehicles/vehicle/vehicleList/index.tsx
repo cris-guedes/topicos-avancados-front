@@ -2,16 +2,22 @@ import { useRouter } from 'next/router'
 import { Vehicle } from '../../../../src/domain/entities/vehicle'
 
 type Props = {
-  vehicle: Vehicle
+  vehicles: Vehicle[]
 }
 
-function VehicleList() {
+function VehicleList({ vehicles }: Props) {
   const route = useRouter()
 
   return (
     <div>
-      <h1>{'vehicle'}</h1>
-      <div></div>
+      <h1>{'vehicles'}</h1>
+      <div>
+        <ul>
+          {vehicles.map((vehicle) => (
+            <li>{vehicle.id}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

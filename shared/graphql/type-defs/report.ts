@@ -3,24 +3,25 @@ import { gql } from '@apollo/client'
 export const reportType = gql`
   type Report {
     id: String
-    date: String
-    period: String
-    parts: [String]
-    address: String
-    vehicle: String
+    dataOcorrencia: String
+    periodoOcorrencia: String
+    partes: [String]
+    localOcorrencia: String
+    veiculoFurtado: String
   }
   input InputReport {
-    date: String
-    period: String
-    parts: [String]
-    address: String
-    vehicle: String
+    dataOcorrencia: String
+    periodoOcorrencia: String
+    partes: [String]
+    localOcorrencia: String
+    veiculoFurtado: String
   }
 
   type Query {
     loadReportsByPeriod(period: String): [Report]
     loadReportsByCityName(city: String): [Report]
     loadReportById(reportId: String): Report
+    loadReports: [Report]
   }
   type Mutation {
     createReport(report: InputReport): Report

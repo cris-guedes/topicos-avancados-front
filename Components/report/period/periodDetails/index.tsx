@@ -2,17 +2,21 @@ import { useRouter } from 'next/router'
 import { Report } from '../../../../src/domain/entities/report'
 
 type Props = {
-  reports: Report
+  reports: Report[]
 }
 
-function ReportByPeriod() {
+function ReportByPeriod({ reports }: Props) {
   const route = useRouter()
 
   const period = route.query.period
   return (
     <div>
       <h1>{period}</h1>
-      <div></div>
+      <div>
+        {reports.map((report) => (
+          <li>{report.id}</li>
+        ))}
+      </div>
     </div>
   )
 }

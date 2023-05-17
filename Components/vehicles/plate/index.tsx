@@ -5,14 +5,14 @@ type Props = {
   vehicle: Vehicle
 }
 
-function VehicleByPlate() {
+function VehicleByPlate({ vehicle }: Props) {
   const route = useRouter()
 
   const plate = route.query.plate
   return (
     <div>
       <h1>{plate}</h1>
-      <div></div>
+      <div>{vehicle.id}</div>
     </div>
   )
 }

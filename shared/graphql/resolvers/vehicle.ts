@@ -1,6 +1,7 @@
 import makeLoadVehicleByColor from '../../../src/domain/useCases/loadVehicleByColor'
 import makeLoadVehiclesByPlateNumber from '../../../src/domain/useCases/loadVehicleByPlateNumber'
 import makeLoadVehiclesByType from '../../../src/domain/useCases/loadVehicleByType'
+import makeLoadVehicles from '../../../src/domain/useCases/loadVehicles'
 
 export const vehicleResolver = {
   Query: {
@@ -12,6 +13,9 @@ export const vehicleResolver = {
     },
     loadVehicleByPlateNumber(_, { plateNumber }) {
       return makeLoadVehiclesByPlateNumber().execute(plateNumber)
+    },
+    loadVehicles() {
+      return makeLoadVehicles().execute()
     }
   }
 }

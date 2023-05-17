@@ -1,8 +1,8 @@
 export type Report = {
   id: String
-  date: String
-  period: String
-  parts: String[]
-  address: String
-  vehicle: String
+  dataOcorrencia: String
+  periodoOcorrencia: String
+  partes: String[]
+  localOcorrencia: String
+  veiculoFurtado: String
 }
