@@ -3,6 +3,15 @@ import httpSideApiProvider from './config/axios'
 import resourses from './config/resourses'
 
 class CarRegistrationService {
+
+  async createCarRegistration(params: CarRegistrationService.createCarRegistration) {
+    const {data} = await httpSideApiProvider.post(
+      `${resourses.carRegistration}`,
+      params
+    )
+    return data
+  }
+  
   async loadCarRegistration(): Promise<CarRegistration[]> {
     const { data } = await httpSideApiProvider.get(resourses.carRegistration)
     return data
@@ -17,11 +26,12 @@ class CarRegistrationService {
     return data
   }
 
-  async updateQuestion(params: CarRegistrationService.updateQuestion) {
-    return await httpSideApiProvider.put(
+  async updateCarRegistration(params: CarRegistrationService.updateCarRegistration) {
+    const {data} = await httpSideApiProvider.put(
       `${resourses.carRegistration}/${params.id}`,
       params
     )
+    return data;
   }
 
   async deleteCarRegistration(
@@ -41,7 +51,8 @@ export namespace CarRegistrationService {
   export type loadById = {
     id: string
   }
-  export type updateQuestion = Partial<CarRegistration>
+  export type updateCarRegistration = Partial<CarRegistration>
+  export type createCarRegistration = Partial<CarRegistration>
 }
 
 export default CarRegistrationService

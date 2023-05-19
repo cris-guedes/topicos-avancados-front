@@ -4,5 +4,5 @@ export type Report = {
   periodoOcorrencia: String
   partes: String[]
   localOcorrencia: String
-  veiculoFurtado: String
+  veiculoFurtado: any
 }

@@ -11,6 +11,15 @@ export const vehicleType = gql`
     emplacamento: CarRegistration
   }
 
+  input InputVehicle {
+    anoFabricacao: String
+    cor: String
+    fabricante: String
+    tipoVeiculo: String
+    modelo: String
+    emplacamento: InputCarRegistration
+  }
+
   type Query {
     loadVehicleByColor(color: String): [Vehicle]
     loadVehicleByType(type: String): [Vehicle]

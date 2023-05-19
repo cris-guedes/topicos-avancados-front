@@ -3,7 +3,6 @@ import { Report } from '../../entities/report'
 import { Vehicle } from '../../entities/vehicle'
 
 export type CreateReportDTO = {
-  report: Report
-  address: Address
-  vehicle: Vehicle
-}
+  localOcorrencia: Address
+  veiculoFurtado: Vehicle
+} & Report

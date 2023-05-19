@@ -6,7 +6,6 @@ class ReportService {
   async loadReports(): Promise<Report[]> {
     try {
       const { data, request } = await httpCoreApiProvider.get(resourses.report)
-      console.log(request)
       return data
     } catch (e) {}
   }
@@ -43,17 +42,21 @@ class ReportService {
   }
 
   async createReport(params: ReportService.createReport) {
-    return await httpCoreApiProvider.post(
-      `${resourses.report}/${params.id}`,
+    const {data} = await httpCoreApiProvider.post(
+      `${resourses.report}`,
       params
     )
+    return data
   }
 
   async updateReport(params: ReportService.updateReport) {
-    return await httpCoreApiProvider.put(
+    console.log("params: ", params)
+    const {data} = await httpCoreApiProvider.put(
       `${resourses.report}/${params.id}`,
       params
     )
+    console.log("data: ", data)
+    return data;
   }
 
   async deleteReport(params: ReportService.deleteById): Promise<Report> {

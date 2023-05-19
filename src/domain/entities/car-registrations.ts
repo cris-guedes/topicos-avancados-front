@@ -1,3 +1,4 @@
+import { type } from 'os'
 import { Vehicle } from './vehicle'
 
 export type CarRegistration = {
@@ -5,5 +6,12 @@ export type CarRegistration = {
   plate: string
   state: string
   city: string
-  vehicle: Vehicle
+  vehicle: any
+}
+
+export type InputCarRegistration = {
+  plate: string
+  state: string
+  city: string
+  vehicle: string
 }

@@ -8,4 +8,11 @@ export const CarRegistrationType = gql`
     city: String
     vehicle: Vehicle
   }
+
+  input InputCarRegistration {
+    plate: String
+    state: String
+    city: String
+    vehicle: String
+  }
 `
