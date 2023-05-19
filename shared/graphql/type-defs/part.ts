@@ -7,4 +7,10 @@ export const partType = gql`
     email: String
     involvement: String
   }
+
+  input InputPart {
+    name: String
+    email: String
+    involvement: String
+  }
 `

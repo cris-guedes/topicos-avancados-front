@@ -3,10 +3,18 @@ import httpCoreApiProvider from './config/axios'
 import resourses from './config/resourses'
 
 class VehicleService {
+
+  async createVehicle(params: VehicleService.createVehicle) {
+    const {data} = await httpCoreApiProvider.post(
+      `${resourses.vehicle}`,
+      params
+    )
+    return data
+  }
+
   async loadVehicles(): Promise<Vehicle[]> {
     try {
       const { data, request } = await httpCoreApiProvider.get(resourses.vehicle)
-      console.log(request)
       return data
     } catch (e) {
       console.log(e)
@@ -24,7 +32,7 @@ class VehicleService {
     params: VehicleService.loadByColor
   ): Promise<Vehicle[]> {
     const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}?color=${params.color}`
+      `${resourses.vehicle}?cor=${params.color}`
     )
     return data
   }
@@ -48,10 +56,11 @@ class VehicleService {
   }
 
   async updateVehicle(params: VehicleService.updateVehicle) {
-    return await httpCoreApiProvider.put(
+    const {data} = await httpCoreApiProvider.put(
       `${resourses.vehicle}/${params.id}`,
       params
     )
+    return data
   }
 
   async deleteVehicle(params: VehicleService.deleteById): Promise<Vehicle> {
@@ -79,6 +88,7 @@ export namespace VehicleService {
     plate: string
   }
   export type updateVehicle = Partial<Vehicle>
+  export type createVehicle = Partial<Vehicle>
 }
 
 export default VehicleService

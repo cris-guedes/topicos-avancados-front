@@ -9,13 +9,15 @@ export const reportType = gql`
     localOcorrencia: String
     veiculoFurtado: String
   }
+
   input InputReport {
     dataOcorrencia: String
     periodoOcorrencia: String
-    partes: [String]
-    localOcorrencia: String
-    veiculoFurtado: String
+    partes: InputPart
+    localOcorrencia: InputAddress
+    veiculoFurtado: InputVehicle
   }
+
 
   type Query {
     loadReportsByPeriod(period: String): [Report]
