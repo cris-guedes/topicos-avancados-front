@@ -1,9 +1,9 @@
 import { LoadReportsByCityName } from './loadReportsByCityName'
-import ReportService from '../../../infra/api-core/report-resourse'
+import AddressService from '../../../infra/api-side/address-service'
 
 const makeLoadReportByCityName = () => {
-  const reportProvider = new ReportService()
-  const LoadReportUseCase = new LoadReportsByCityName(reportProvider)
+  const adressService = new AddressService()
+  const LoadReportUseCase = new LoadReportsByCityName(adressService)
   return LoadReportUseCase
 }
 

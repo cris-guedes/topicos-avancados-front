@@ -3,9 +3,8 @@ import httpCoreApiProvider from './config/axios'
 import resourses from './config/resourses'
 
 class VehicleService {
-
   async createVehicle(params: VehicleService.createVehicle) {
-    const {data} = await httpCoreApiProvider.post(
+    const { data } = await httpCoreApiProvider.post(
       `${resourses.vehicle}`,
       params
     )
@@ -46,17 +45,8 @@ class VehicleService {
     return data
   }
 
-  async loadVehiclesByPlateNumber(
-    params: VehicleService.loadByPlateNumber
-  ): Promise<Vehicle[]> {
-    const { data } = await httpCoreApiProvider.get(
-      `${resourses.vehicle}?placa=${params.plate}`
-    )
-    return data
-  }
-
   async updateVehicle(params: VehicleService.updateVehicle) {
-    const {data} = await httpCoreApiProvider.put(
+    const { data } = await httpCoreApiProvider.put(
       `${resourses.vehicle}/${params.id}`,
       params
     )

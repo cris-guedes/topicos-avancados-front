@@ -3,14 +3,21 @@ import httpSideApiProvider from './config/axios'
 import resourses from './config/resourses'
 
 class AddressService {
-
-    async createAddress(params: AddressService.createAddress) {
-    const {data} = await httpSideApiProvider.post(
+  async createAddress(params: AddressService.createAddress) {
+    const { data } = await httpSideApiProvider.post(
       `${resourses.address}`,
       params
     )
     return data
+  }
 
+  async loadAddressByCity(
+    params: AddressService.loadByCity
+  ): Promise<Address[]> {
+    const { data } = await httpSideApiProvider.get(
+      `${resourses.address}?city=${params.city}`
+    )
+    return data
   }
 
   async loadAddress(): Promise<Address[]> {
@@ -26,11 +33,11 @@ class AddressService {
   }
 
   async updateAddress(params: AddressService.updateAddress) {
-    const {data} = await httpSideApiProvider.put(
+    const { data } = await httpSideApiProvider.put(
       `${resourses.address}/${params.id}`,
       params
     )
-    return data;
+    return data
   }
 
   async deleteAddress(params: AddressService.deleteById): Promise<Address> {
@@ -47,6 +54,9 @@ export namespace AddressService {
   }
   export type loadById = {
     id: string
+  }
+  export type loadByCity = {
+    city: string
   }
   export type updateAddress = Partial<Address>
   export type createAddress = Partial<Address>

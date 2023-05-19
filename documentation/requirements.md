@@ -16,5 +16,5 @@
      cor   cor/[cor].ts
      tipo do veículo (Carro, Motocicleta, Caminhão, etc) veiculo/[veiculo].ts
 
-loadVehicleByPlateNumber: serviço de car registration
-reportby city: serviço de adress
+loadVehicleByPlateNumber: serviço de car registration ?plate
+reportby city: serviço de adress reportcitylist

@@ -1,10 +1,10 @@
 import { LoadVehiclesByPlateNumber } from './loadVehicleByPlateNumber'
-import VehicleService from '../../../infra/api-core/vehicles-resourse'
+import CarRegistrationService from '../../../infra/api-side/car-registration-service'
 
 const makeLoadVehiclesByPlateNumber = () => {
-  const vehicleProvider = new VehicleService()
+  const carRegistration = new CarRegistrationService()
   const LoadReportsByPlateNumberUseCase = new LoadVehiclesByPlateNumber(
-    vehicleProvider
+    carRegistration
   )
   return LoadReportsByPlateNumberUseCase
 }

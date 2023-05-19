@@ -18,7 +18,6 @@ export const reportType = gql`
     veiculoFurtado: InputVehicle
   }
 
-
   type Query {
     loadReportsByPeriod(period: String): [Report]
     loadReportsByCityName(city: String): [Report]
