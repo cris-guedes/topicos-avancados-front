@@ -1,6 +1,7 @@
 import { Address } from '../../domain/entities/addres'
 import httpSideApiProvider from './config/axios'
 import resourses from './config/resourses'
+import axios from 'axios'
 
 class AddressService {
   async createAddress(params: AddressService.createAddress) {
@@ -17,7 +18,24 @@ class AddressService {
     const { data } = await httpSideApiProvider.get(
       `${resourses.address}?city=${params.city}`
     )
-    return data
+    const reports = data?.filter((address) => {
+      if (address.report) return address
+    })
+
+    const result = Promise.all(
+      reports?.map(async (report) => {
+        try {
+          const { data } = await axios.get(report.report)
+          console.log(result)
+          return data
+        } catch (e) {
+          console.log(e)
+        }
+      })
+    )
+
+    console.log(await result)
+    return await result
   }
 
   async loadAddress(): Promise<Address[]> {

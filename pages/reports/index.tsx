@@ -7,24 +7,8 @@ type Props = {
   reports: Report[]
 }
 
-function Report({ reports }: Props) {
-  return <ReportList reports={reports} />
+function Report() {
+  return <ReportList />
 }
 
 export default Report
-
-export async function getServerSideProps() {
-  const apollo = initializeApollo()
-
-  const {
-    data: { loadReports }
-  } = await apollo.query({
-    query: LOAD_REPORTS
-  })
-
-  return {
-    props: {
-      reports: loadReports
-    }
-  }
-}

@@ -1,5 +1,5 @@
 import makeCreateReport from '../../src/domain/useCases/createReport'
-import * as data from './csvjson.json'
+import { data } from './csvjson'
 
 export type Registers = Register[]
 
@@ -59,95 +59,106 @@ export interface Register {
   QUANT_CELULAR: string
   MARCA_CELULAR: string
 }
-const register: any = data
+const register = data
 
 const createReportUseCase = makeCreateReport()
-register.map(async (data: Register) => {
-  const {
-    ANO_BO,
-    ANO_FABRICACAO,
-    ANO_MODELO,
-    BAIRRO: neighborhood,
-    BO_AUTORIA,
-    BO_EMITIDO,
-    BO_INICIADO,
-    CIDADE: city,
-    CIDADE_VEICULO,
-    CORCUTIS,
-    DATACOMUNICACAO,
-    DATAELABORACAO,
-    DATANASCIMENTO,
-    DATAOCORRENCIA: dataOcorrencia,
-    DELEGACIA_CIRCUNSCRICAO,
-    DELEGACIA_NOME,
-    DESCRICAOLOCAL,
-    DESCR_COR_VEICULO,
-    DESCR_MARCA_VEICULO,
-    DESCR_TIPO_VEICULO,
-    DESDOBRAMENTO,
-    ESPECIE,
-    ESTADOCIVIL,
-    EXAME,
-    FLAGRANTE,
-    GRAUINSTRUCAO,
-    HORAOCORRENCIA,
-    IDADE,
-    LATITUDE,
-    LOGRADOURO: publicPlace,
-    LONGITUDE,
-    MARCA_CELULAR,
-    NACIONALIDADE,
-    NATURALIDADE,
-    NATUREZAVINCULADA,
-    NUMERO: number,
-    NUMERO_BOLETIM,
-    NUMERO_BOLETIM_PRINCIPAL,
-    NUM_BO,
-    PARENTESCO,
-    PERIDOOCORRENCIA,
-    PLACA_VEICULO,
-    PROFISSAO,
-    QUANT_CELULAR,
-    RELACIONAMENTO,
-    RUBRICA,
-    SEXO,
-    SOLUCAO,
-    STATUS,
-    TIPOPESSOA,
-    TIPOVINCULO,
-    UF: state,
-    UF_VEICULO,
-    VITIMAFATAL
-  } = data
-
-  return await createReportUseCase.execute({
-    dataOcorrencia: null,
-    localOcorrencia: {
-      city: null,
-      neighborhood: null,
-      number: null,
-      publicPlace: null,
-      report: null,
-      state: null
-    },
-    partes: {
-      email: null,
-      involvement: null,
-      name: null
-    },
-    periodoOcorrencia: null,
-    veiculoFurtado: {
-      anoFabricacao: null,
-      cor: null,
-      emplacamento: {
-        vehicle: null,
-        city: null,
-        plate: null,
-        state: null
-      },
-      fabricante: null,
-      modelo: null,
-      tipoVeiculo: null
+console.log('dataa', register)
+export async function bulkInsert() {
+  return register.map(async (register) => {
+    setTimeout(function () {
+      // Código a ser executado após 1 segundo
+      console.log(' okey')
+    }, 1000)
+    const {
+      ANO_BO,
+      ANO_FABRICACAO: anoFabricacao,
+      ANO_MODELO: modelo,
+      BAIRRO: neighborhood,
+      BO_AUTORIA,
+      BO_EMITIDO,
+      BO_INICIADO,
+      CIDADE: city,
+      CIDADE_VEICULO: cityVehicle,
+      CORCUTIS,
+      DATACOMUNICACAO,
+      DATAELABORACAO,
+      DATANASCIMENTO,
+      DATAOCORRENCIA: dataOcorrencia,
+      DELEGACIA_CIRCUNSCRICAO,
+      DELEGACIA_NOME,
+      DESCRICAOLOCAL,
+      DESCR_COR_VEICULO: cor,
+      DESCR_MARCA_VEICULO: fabricante,
+      DESCR_TIPO_VEICULO: tipoVeiculo,
+      DESDOBRAMENTO,
+      ESPECIE,
+      ESTADOCIVIL,
+      EXAME,
+      FLAGRANTE,
+      GRAUINSTRUCAO,
+      HORAOCORRENCIA,
+      IDADE,
+      LATITUDE,
+      LOGRADOURO: publicPlace,
+      LONGITUDE,
+      MARCA_CELULAR,
+      NACIONALIDADE,
+      NATURALIDADE,
+      NATUREZAVINCULADA,
+      NUMERO: number,
+      NUMERO_BOLETIM,
+      NUMERO_BOLETIM_PRINCIPAL,
+      NUM_BO,
+      PARENTESCO,
+      PERIDOOCORRENCIA: periodoOcorrencia,
+      PLACA_VEICULO: plate,
+      PROFISSAO,
+      QUANT_CELULAR,
+      RELACIONAMENTO,
+      RUBRICA,
+      SEXO,
+      SOLUCAO,
+      STATUS,
+      TIPOPESSOA,
+      TIPOVINCULO: involvement,
+      UF: state,
+      UF_VEICULO,
+      VITIMAFATAL
+    } = register
+    const name = Math.random().toString()
+    const email = Math.random().toString()
+    try {
+      const report = await createReportUseCase.execute({
+        dataOcorrencia,
+        localOcorrencia: {
+          city,
+          neighborhood,
+          number: number.toString(),
+          publicPlace,
+          state
+        },
+        partes: {
+          email,
+          involvement,
+          name
+        },
+        periodoOcorrencia,
+        veiculoFurtado: {
+          anoFabricacao: anoFabricacao.toString(),
+          cor,
+          emplacamento: {
+            city: cityVehicle,
+            plate: plate.toString(),
+            state
+          },
+          fabricante,
+          modelo: modelo.toString(),
+          tipoVeiculo
+        }
+      })
+      return report
+    } catch (e) {
+      console.log(e)
     }
   })
-})``
+}

@@ -8,7 +8,7 @@ type Props = {
 }
 
 function Vehicle({ vehicles }: Props) {
-  return <VehicleList vehicles={vehicles} />
+  return <VehicleList vehicle={vehicles} />
 }
 
 export default Vehicle

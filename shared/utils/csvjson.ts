@@ -1,4 +1,4 @@
-[
+export const data =[
  
   {
     "ANO_BO": 2023,

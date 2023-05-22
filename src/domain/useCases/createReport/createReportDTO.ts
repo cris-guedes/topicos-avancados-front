@@ -1,8 +1,5 @@
-import { Address } from '../../entities/addres'
-import { Report } from '../../entities/report'
-import { Vehicle } from '../../entities/vehicle'
+import { Address, InputAddress } from '../../entities/addres'
+import { InputReport, Report } from '../../entities/report'
+import { InputVehicle, Vehicle } from '../../entities/vehicle'
 
-export type CreateReportDTO = {
-  localOcorrencia: Address
-  veiculoFurtado: Vehicle
-} & Report
+export type CreateReportDTO = InputReport

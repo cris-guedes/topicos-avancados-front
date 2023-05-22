@@ -9,7 +9,7 @@ type Props = {
 }
 
 function ReportDetails({ report }: Props) {
-  return <ReportById report={report} />
+  return <ReportById {...report} />
 }
 
 export default ReportDetails

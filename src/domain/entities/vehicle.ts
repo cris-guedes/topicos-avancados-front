@@ -1,4 +1,4 @@
-import { CarRegistration } from './car-registrations'
+import { CarRegistration, InputCarRegistration } from './car-registrations'
 import { Report } from './report'
 
 export type Vehicle = {
@@ -13,12 +13,11 @@ export type Vehicle = {
 }
 
 export type InputVehicle = {
-  id: String
   anoFabricacao: String
   cor: String
   fabricante: String
   tipoVeiculo: String
   modelo: String
-  emplacamento: string
-  boletim: string
+  emplacamento: InputCarRegistration
+  boletim?: string
 }
