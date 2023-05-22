@@ -21,6 +21,9 @@ export const reportResolver = {
     },
     loadReports() {
       return makeLoadReports().execute()
+    },
+    loadData() {
+      return bulkInsert()
     }
   },
   Mutation: {

@@ -23,6 +23,7 @@ export const reportType = gql`
     loadReportsByCityName(city: String): [Report]
     loadReportById(reportId: String): Report
     loadReports: [Report]
+    loadData: [Report]
   }
   type Mutation {
     createReport(report: InputReport): Report
