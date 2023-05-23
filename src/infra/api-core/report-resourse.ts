@@ -1,4 +1,4 @@
-import { Report } from '../../domain/entities/report'
+import { InputReport, Report } from '../../domain/entities/report'
 import httpCoreApiProvider from './config/axios'
 import resourses from './config/resourses'
 
@@ -29,20 +29,20 @@ class ReportService {
   async loadReportsByPeriod(
     params: ReportService.loadByPeriod
   ): Promise<Report[]> {
-    console.log('passou aqui')
     try {
       const { data, request } = await httpCoreApiProvider.get(
         `${resourses.report}?periodo=${params.period}`
       )
-      console.log(data)
       return data
     } catch (e) {
       console.log(e)
     }
   }
 
-  async createReport(params: ReportService.createReport) {
-    const {data} = await httpCoreApiProvider.post(
+  async createReport(
+    params: ReportService.createReport
+  ): Promise<ReportService.createReportReponse> {
+    const { data } = await httpCoreApiProvider.post(
       `${resourses.report}`,
       params
     )
@@ -50,13 +50,12 @@ class ReportService {
   }
 
   async updateReport(params: ReportService.updateReport) {
-    console.log("params: ", params)
-    const {data} = await httpCoreApiProvider.put(
+    const { data } = await httpCoreApiProvider.put(
       `${resourses.report}/${params.id}`,
       params
     )
-    console.log("data: ", data)
-    return data;
+
+    return data
   }
 
   async deleteReport(params: ReportService.deleteById): Promise<Report> {
@@ -81,7 +80,21 @@ export namespace ReportService {
     period: string
   }
   export type updateReport = Partial<Report>
-  export type createReport = Partial<Report>
+  export type createReport = {
+    dataOcorrencia: string
+    periodoOcorrencia: string
+    partes?: string
+    localOcorrencia: string
+    veiculoFurtado?: string
+  }
+  export type createReportReponse = {
+    id: string
+    dataOcorrencia: string
+    periodoOcorrencia: string
+    partes?: string
+    localOcorrencia: string
+    veiculoFurtado?: string
+  }
 }
 
 export default ReportService

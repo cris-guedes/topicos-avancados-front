@@ -62,13 +62,10 @@ export interface Register {
 const register = data
 
 const createReportUseCase = makeCreateReport()
-console.log('dataa', register)
+
 export async function bulkInsert() {
   return register.map(async (register) => {
-    setTimeout(function () {
-      // Código a ser executado após 1 segundo
-      console.log(' okey')
-    }, 1000)
+    setTimeout(function () {}, 1000)
     const {
       ANO_BO,
       ANO_FABRICACAO: anoFabricacao,

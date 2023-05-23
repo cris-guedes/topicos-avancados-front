@@ -1,9 +1,9 @@
-import { Vehicle } from '../../domain/entities/vehicle'
+import { InputVehicle, Vehicle } from '../../domain/entities/vehicle'
 import httpCoreApiProvider from './config/axios'
 import resourses from './config/resourses'
 
 class VehicleService {
-  async createVehicle(params: VehicleService.createVehicle) {
+  async createVehicle(params: VehicleService.createVehicle): Promise<Vehicle> {
     const { data } = await httpCoreApiProvider.post(
       `${resourses.vehicle}`,
       params
@@ -78,7 +78,15 @@ export namespace VehicleService {
     plate: string
   }
   export type updateVehicle = Partial<Vehicle>
-  export type createVehicle = Partial<Vehicle>
+  export type createVehicle = {
+    anoFabricacao: string
+    cor: string
+    fabricante: string
+    tipoVeiculo: string
+    modelo: string
+    emplacamento: string
+    boletim?: string
+  }
 }
 
 export default VehicleService

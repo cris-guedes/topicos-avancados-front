@@ -18,24 +18,8 @@ class AddressService {
     const { data } = await httpSideApiProvider.get(
       `${resourses.address}?city=${params.city}`
     )
-    const reports = data?.filter((address) => {
-      if (address.report) return address
-    })
 
-    const result = Promise.all(
-      reports?.map(async (report) => {
-        try {
-          const { data } = await axios.get(report.report)
-          console.log(result)
-          return data
-        } catch (e) {
-          console.log(e)
-        }
-      })
-    )
-
-    console.log(await result)
-    return await result
+    return data
   }
 
   async loadAddress(): Promise<Address[]> {

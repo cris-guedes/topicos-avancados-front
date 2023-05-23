@@ -52,10 +52,6 @@ function ReportList() {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(100)
 
-  React.useEffect(() => {
-    console.log(data)
-  }, [data])
-
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
   }

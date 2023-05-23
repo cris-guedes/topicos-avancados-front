@@ -32,7 +32,7 @@ class CarRegistrationService {
   ) {
     const { data } = await httpSideApiProvider.put(
       `${resourses.carRegistration}/${params.id}`,
-      params
+      params.data
     )
     return data
   }
@@ -65,7 +65,10 @@ export namespace CarRegistrationService {
   export type loadByPlateNumber = {
     plate: string
   }
-  export type updateCarRegistration = Partial<CarRegistration>
+  export type updateCarRegistration = {
+    data: Partial<Omit<CarRegistration, 'id'>>
+    id: string
+  }
   export type createCarRegistration = Partial<CarRegistration>
 }
 

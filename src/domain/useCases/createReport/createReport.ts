@@ -3,6 +3,13 @@ import ReportService from '../../../infra/api-core/report-resourse'
 import VehicleService from '../../../infra/api-core/vehicles-resourse'
 import AddressService from '../../../infra/api-side/address-service'
 import CarRegistrationService from '../../../infra/api-side/car-registration-service'
+import PartService from '../../../infra/api-side/part-service'
+import GenericHttpRequest from '../../../infra/genericHttpRequest/genericHttpRequest'
+import { InputAddress } from '../../entities/addres'
+import { InputCarRegistration } from '../../entities/car-registrations'
+import { InputPart } from '../../entities/part'
+import { Report } from '../../entities/report'
+import { InputVehicle } from '../../entities/vehicle'
 import { CreateReportDTO } from './createReportDTO'
 
 export class CreateReport {
@@ -10,81 +17,130 @@ export class CreateReport {
     private readonly reportProvider: ReportService,
     private readonly carRegistrationProvider: CarRegistrationService,
     private readonly vehicleProvider: VehicleService,
-    private readonly addressProvider: AddressService
+    private readonly addressProvider: AddressService,
+    private readonly partProvider: PartService,
+    private readonly genericHttpRequest: GenericHttpRequest
   ) {}
 
-  async execute(reportData: CreateReportDTO) {
-    const {
-      veiculoFurtado,
-      localOcorrencia,
-      dataOcorrencia,
-      periodoOcorrencia
-    } = reportData
+  async execute(reportDTO: CreateReportDTO) {
+    console.log(reportDTO)
+    try {
+      const normalizedReportData = await this.normalizeReportData(reportDTO)
 
-    const emplacamento = veiculoFurtado.emplacamento
+      const report = await this.createReport(normalizedReportData)
+      console.log('Report', report.data)
+      await this.updateRelations(report)
 
-    const report = {
-      dataOcorrencia: dataOcorrencia,
-      periodoOcorrencia: periodoOcorrencia,
-      partes: null,
-      id: null,
-      veiculoFurtado: 'link',
-      localOcorrencia: 'link'
+      return report
+    } catch (e) {
+      console.log(e)
     }
+  }
 
-    const address = {
-      city: localOcorrencia.city,
-      neighborhood: localOcorrencia.neighborhood,
-      publicPlace: localOcorrencia.publicPlace,
-      state: localOcorrencia.state,
-      number: localOcorrencia.number,
-      report: null,
-      id: null
-    }
-
-    const registration = {
-      city: emplacamento.city,
-      plate: emplacamento.plate,
-      state: emplacamento.state,
-      vehicle: 'link',
-      id: null
-    }
-
-    const vehicle = {
-      anoFabricacao: veiculoFurtado.anoFabricacao,
-      cor: veiculoFurtado.cor,
-      fabricante: veiculoFurtado.fabricante,
-      modelo: veiculoFurtado.modelo,
-      tipoVeiculo: veiculoFurtado.tipoVeiculo,
-      emplacamento: 'link',
-      boletim: 'link',
-      id: null
-    }
-
+  private async createAddress(address: InputAddress) {
     const savedAddress = await this.addressProvider.createAddress(address)
-    const savedReport = await this.reportProvider.createReport(report)
-    const savedVehicle = await this.vehicleProvider.createVehicle(vehicle)
-    const savedRegistration =
-      await this.carRegistrationProvider.createCarRegistration(registration)
+    return envs.API.sideApi + '/address/' + savedAddress.id
+  }
 
-    report.id = savedReport.id
-    report.veiculoFurtado = envs.API.coreApi + '/veiculos/' + savedVehicle.id
-    report.localOcorrencia = envs.API.sideApi + '/address/' + savedAddress.id
+  private async createParts(part: InputPart) {
+    const savedPart = await this.partProvider.createParts(part)
+    return envs.API.sideApi + '/parts/' + savedPart.id
+  }
 
-    address.id = savedAddress.id
-    address.report = envs.API.coreApi + '/boletins/' + savedReport.id
+  private async createVehicle(vehicle: InputVehicle) {
+    const emplacamento = await this.createCarRegistration(vehicle.emplacamento)
 
-    registration.id = savedRegistration.id
-    registration.vehicle = envs.API.coreApi + '/veiculos/' + savedVehicle.id
+    const vehicleData = { ...vehicle, emplacamento: emplacamento.resourse }
 
-    vehicle.id = savedVehicle.id
-    vehicle.emplacamento =
-      envs.API.sideApi + '/car-registration/' + savedRegistration.id
-    vehicle.boletim = envs.API.coreApi + '/boletins/' + savedReport.id
+    const savedVehicle = await this.vehicleProvider.createVehicle(vehicleData)
 
-    await this.addressProvider.updateAddress(address)
-    await this.vehicleProvider.updateVehicle(vehicle)
-    await this.carRegistrationProvider.updateCarRegistration(registration)
-    return await this.reportProvider.updateReport(report)
+    await this.linkCarRegistrationWithVehicle(
+      emplacamento.data,
+      emplacamento.data.id
+    )
+
+    return envs.API.coreApi + '/veiculos/' + savedVehicle.id
+  }
+
+  private async createCarRegistration(carRegistration: InputCarRegistration) {
+    const savedCarRegistration =
+      await this.carRegistrationProvider.createCarRegistration(carRegistration)
+    return {
+      resourse:
+        envs.API.sideApi + '/car-registration/' + savedCarRegistration.id,
+      data: savedCarRegistration
+    }
+  }
+
+  private async linkCarRegistrationWithVehicle(
+    carRegistrationWithVehicleLink: InputCarRegistration,
+    carRegistrationId: string
+  ) {
+    const savedCarRegistration =
+      await this.carRegistrationProvider.updateCarRegistration({
+        data: carRegistrationWithVehicleLink,
+        id: carRegistrationId
+      })
+    return envs.API.sideApi + '/car-registration/' + savedCarRegistration.id
+  }
+
+  private async createReport(data: {
+    dataOcorrencia: string
+    periodoOcorrencia: string
+    partes?: string
+    localOcorrencia: string
+    veiculoFurtado?: string
+  }) {
+    const report = await this.reportProvider.createReport(data)
+
+    return {
+      resourse: envs.API.coreApi + '/boletins/' + report.id,
+      data: report
+    }
+  }
+  private async normalizeReportData(reportDTO: CreateReportDTO) {
+    const {
+      localOcorrencia,
+      partes,
+      dataOcorrencia,
+      periodoOcorrencia,
+      veiculoFurtado
+    } = reportDTO
+
+    const reportData = {
+      dataOcorrencia,
+      localOcorrencia: localOcorrencia
+        ? await this.createAddress(localOcorrencia)
+        : null,
+      partes: partes ? await this.createParts(partes) : null,
+      periodoOcorrencia,
+      veiculoFurtado: veiculoFurtado
+        ? await this.createVehicle(veiculoFurtado)
+        : null
+    }
+    return reportData
+  }
+
+  private async updateRelations(report: {
+    resourse: string
+    data: {
+      dataOcorrencia: string
+      periodoOcorrencia: string
+      partes?: string
+      localOcorrencia: string
+      veiculoFurtado?: string
+    }
+  }) {
+    const address = {
+      ...(await this.genericHttpRequest.get(report.data.localOcorrencia)),
+      report: report.resourse
+    }
+    const vehicle = {
+      ...(await this.genericHttpRequest.get(report.data.veiculoFurtado)),
+      report: report.resourse
+    }
+    console.log('Adress', await this.addressProvider.updateAddress(address))
+    console.log('Vehicle', await this.vehicleProvider.updateVehicle(vehicle))
+    return
   }
 }

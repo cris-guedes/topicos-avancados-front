@@ -1,4 +1,4 @@
-import { Part } from '../../domain/entities/part'
+import { InputPart, Part } from '../../domain/entities/part'
 import httpSideApiProvider from './config/axios'
 import resourses from './config/resourses'
 
@@ -21,6 +21,9 @@ class PartService {
       params
     )
   }
+  async createParts(params: PartService.CreateParts): Promise<Part> {
+    return await httpSideApiProvider.post(`${resourses.part}`, params)
+  }
 
   async deletePart(params: PartService.deleteById): Promise<Part> {
     const { data } = await httpSideApiProvider.delete(
@@ -38,6 +41,7 @@ export namespace PartService {
     id: string
   }
   export type updateQuestion = Partial<Part>
+  export type CreateParts = InputPart
 }
 
 export default PartService

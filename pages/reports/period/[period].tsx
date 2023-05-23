@@ -17,7 +17,7 @@ export default ReportDetails
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const apollo = initializeApollo()
   const period = context.query.period
-  console.log(period)
+
   const {
     data: { loadReportsByPeriod }
   } = await apollo.query({

@@ -1,19 +1,19 @@
 import { InputAddress } from './addres'
 import { InputPart, Part } from './part'
-import { InputVehicle } from './vehicle'
+import { InputVehicle, Vehicle } from './vehicle'
 
 export type Report = {
-  id: String
-  dataOcorrencia: String
-  periodoOcorrencia: String
-  partes: String[]
-  localOcorrencia: String
-  veiculoFurtado: any
+  id: string
+  dataOcorrencia: string
+  periodoOcorrencia: string
+  partes: string[]
+  localOcorrencia: string
+  veiculoFurtado: Vehicle
 }
 
 export type InputReport = {
-  dataOcorrencia: String
-  periodoOcorrencia: String
+  dataOcorrencia: string
+  periodoOcorrencia: string
   partes?: InputPart
   localOcorrencia: InputAddress
   veiculoFurtado?: InputVehicle
