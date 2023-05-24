@@ -40,18 +40,18 @@ export const LOAD_VEHICLES_BY_COLOR = gql`
 export const LOAD_VEHICLES_BY_PLATE_NUMBER = gql`
   query LoadVehicleByPlateNumber($plateNumber: String) {
     loadVehicleByPlateNumber(plateNumber: $plateNumber) {
-      id
       anoFabricacao
       cor
-      fabricante
-      tipoVeiculo
-      modelo
       emplacamento {
         id
         plate
         state
         city
       }
+      fabricante
+      id
+      modelo
+      tipoVeiculo
     }
   }
 `

@@ -1,9 +1,10 @@
 import envs from '../../../../shared/envs'
 import ReportService from '../../../infra/providers/apis/api-core/report-resourse'
 import VehicleService from '../../../infra/providers/apis/api-core/vehicles-resourse'
-import AddressService from '../../../infra/api-side/address-service'
-import CarRegistrationService from '../../../infra/api-side/car-registration-service'
-import PartService from '../../../infra/api-side/part-service'
+import AddressService from '../../../infra/providers/apis/api-side/address-service'
+import CarRegistrationService from '../../../infra/providers/apis/api-side/car-registration-service'
+import PartService from '../../../infra/providers/apis/api-side/part-service'
+
 import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/genericHttpRequest'
 import { InputAddress } from '../../entities/addres'
 import { InputCarRegistration } from '../../entities/car-registrations'
@@ -25,7 +26,7 @@ export class CreateReport {
   async execute(reportDTO: CreateReportDTO) {
     console.log(reportDTO)
     try {
-      this.validateReportDTO(reportDTO)
+      //this.validateReportDTO(reportDTO)
       const normalizedReportData = await this.normalizeReportData(reportDTO)
 
       const report = await this.createReport(normalizedReportData)
@@ -40,13 +41,13 @@ export class CreateReport {
   }
 
   private async createAddress(address: InputAddress) {
-    const savedAddress = await this.addressProvider.createAddress(address)
+    const savedAddress = await this.addressProvider.create(address)
     return envs.API.sideApi + '/address/' + savedAddress.id
   }
 
   private async createParts(part: InputPart) {
-    const savedPart = await this.partProvider.createParts(part)
-    return envs.API.sideApi + '/parts/' + savedPart.id
+    const savedPart = await this.partProvider.create(part)
+    return envs.API.sideApi + '/part/' + savedPart.id
   }
 
   private async createVehicle(vehicle: InputVehicle) {
@@ -54,19 +55,20 @@ export class CreateReport {
 
     const vehicleData = { ...vehicle, emplacamento: emplacamento.resourse }
 
-    const savedVehicle = await this.vehicleProvider.createVehicle(vehicleData)
-
+    const savedVehicle = await this.vehicleProvider.create(vehicleData)
+    const vehicleUrl = envs.API.coreApi + '/veiculos/' + savedVehicle.id
     await this.linkCarRegistrationWithVehicle(
-      emplacamento.data,
+      { ...emplacamento.data, vehicle: vehicleUrl },
       emplacamento.data.id
     )
 
-    return envs.API.coreApi + '/veiculos/' + savedVehicle.id
+    return vehicleUrl
   }
 
   private async createCarRegistration(carRegistration: InputCarRegistration) {
-    const savedCarRegistration =
-      await this.carRegistrationProvider.createCarRegistration(carRegistration)
+    const savedCarRegistration = await this.carRegistrationProvider.create(
+      carRegistration
+    )
     return {
       resourse:
         envs.API.sideApi + '/car-registration/' + savedCarRegistration.id,
@@ -78,11 +80,10 @@ export class CreateReport {
     carRegistrationWithVehicleLink: InputCarRegistration,
     carRegistrationId: string
   ) {
-    const savedCarRegistration =
-      await this.carRegistrationProvider.updateCarRegistration({
-        data: carRegistrationWithVehicleLink,
-        id: carRegistrationId
-      })
+    const savedCarRegistration = await this.carRegistrationProvider.update({
+      data: carRegistrationWithVehicleLink,
+      id: carRegistrationId
+    })
     return envs.API.sideApi + '/car-registration/' + savedCarRegistration.id
   }
 
@@ -93,7 +94,7 @@ export class CreateReport {
     localOcorrencia: string
     veiculoFurtado?: string
   }) {
-    const report = await this.reportProvider.createReport(data)
+    const report = await this.reportProvider.create(data)
 
     return {
       resourse: envs.API.coreApi + '/boletins/' + report.id,
@@ -141,8 +142,14 @@ export class CreateReport {
       report: report.resourse
     }
 
-    console.log('Adress', await this.addressProvider.updateAddress(address))
-    console.log('Vehicle', await this.vehicleProvider.updateVehicle(vehicle))
+    console.log(
+      'Adress',
+      await this.addressProvider.update({ data: address, id: address.id })
+    )
+    console.log(
+      'Vehicle',
+      await this.vehicleProvider.update({ data: vehicle, id: vehicle.id })
+    )
     return
   }
 

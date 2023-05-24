@@ -1,10 +1,13 @@
+import CarRegistrationService from '../../../infra/providers/apis/api-side/car-registration-service'
+import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/genericHttpRequest'
 import { LoadVehiclesByPlateNumber } from './loadVehicleByPlateNumber'
-import CarRegistrationService from '../../../infra/api-side/car-registration-service'
 
 const makeLoadVehiclesByPlateNumber = () => {
   const carRegistration = new CarRegistrationService()
+  const httpRequester = new GenericHttpRequest()
   const LoadReportsByPlateNumberUseCase = new LoadVehiclesByPlateNumber(
-    carRegistration
+    carRegistration,
+    httpRequester
   )
   return LoadReportsByPlateNumberUseCase
 }

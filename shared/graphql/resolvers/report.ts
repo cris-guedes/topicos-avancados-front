@@ -16,8 +16,12 @@ export const reportResolver = {
     async loadReportsByPeriod(_, { period }) {
       return await makeLoadReportByPeriod().execute(period)
     },
-    loadReportById(_, { reportId }) {
-      return makeLoadReportById().execute(reportId)
+    async loadReportById(_, { reportId }) {
+      try {
+        return await makeLoadReportById().execute(reportId)
+      } catch (e) {
+        console.log(e)
+      }
     },
     loadReports() {
       return makeLoadReports().execute()

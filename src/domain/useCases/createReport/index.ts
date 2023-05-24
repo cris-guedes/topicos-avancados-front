@@ -1,8 +1,9 @@
 import ReportService from '../../../infra/providers/apis/api-core/report-resourse'
 import VehicleService from '../../../infra/providers/apis/api-core/vehicles-resourse'
-import AddressService from '../../../infra/api-side/address-service'
-import CarRegistrationService from '../../../infra/api-side/car-registration-service'
-import PartService from '../../../infra/api-side/part-service'
+import AddressService from '../../../infra/providers/apis/api-side/address-service'
+import CarRegistrationService from '../../../infra/providers/apis/api-side/car-registration-service'
+import PartService from '../../../infra/providers/apis/api-side/part-service'
+
 import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/genericHttpRequest'
 import { CreateReport } from './createReport'
 

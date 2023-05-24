@@ -12,6 +12,7 @@ export const vehicleResolver = {
       return makeLoadVehiclesByType().execute(type)
     },
     loadVehicleByPlateNumber(_, { plateNumber }) {
+      console.log(plateNumber)
       return makeLoadVehiclesByPlateNumber().execute(plateNumber)
     },
     loadVehicles() {

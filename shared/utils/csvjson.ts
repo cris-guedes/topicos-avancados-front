@@ -44,7 +44,7 @@ export const data = [
     TIPOVINCULO: '',
     RELACIONAMENTO: '',
     PARENTESCO: '',
-    PLACA_VEICULO: 'GIW4H23',
+    PLACA_VEICULO: 'z1',
     UF_VEICULO: 'SP',
     CIDADE_VEICULO: 'BERTIOGA',
     DESCR_COR_VEICULO: 'Preta',
@@ -111,7 +111,6 @@ export const data = [
     QUANT_CELULAR: '',
     MARCA_CELULAR: ''
   }
-
 ]
 const rest = [
   {
@@ -31631,7 +31630,7 @@ const rest = [
     TIPOVINCULO: '',
     RELACIONAMENTO: '',
     PARENTESCO: '',
-    PLACA_VEICULO: 'GIW4H23',
+    PLACA_VEICULO: 'z',
     UF_VEICULO: 'SP',
     CIDADE_VEICULO: 'BERTIOGA',
     DESCR_COR_VEICULO: 'Preta',

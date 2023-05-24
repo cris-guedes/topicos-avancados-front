@@ -4,6 +4,6 @@ export class LoadReports {
   constructor(private readonly reportPorvider: ReportService) {}
 
   async execute() {
-    return await this.reportPorvider.loadReports()
+    return await this.reportPorvider.load()
   }
 }

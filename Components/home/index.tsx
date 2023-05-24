@@ -41,21 +41,9 @@ function Home() {
             component="nav"
             aria-labelledby="nested-list-subheader"
           >
-            <ListItemButton onClick={() => route.push('/reports/city')}>
-              <SendIcon />
-              <ListItemText primary=" Boletins por Cidade" />
-            </ListItemButton>
-            <ListItemButton onClick={() => route.push('/reports/period')}>
-              <SendIcon />
-              <ListItemText primary=" Boletins por Periodo" />
-            </ListItemButton>
             <ListItemButton onClick={() => route.push('/reports')}>
               <SendIcon />
               <ListItemText primary=" Todos os Boletins" />
-            </ListItemButton>
-            <ListItemButton onClick={() => route.push('/reports')}>
-              <SendIcon />
-              <ListItemText primary=" Criar um Boletim" />
             </ListItemButton>
           </List>
         </AccordionDetails>
@@ -74,14 +62,6 @@ function Home() {
             component="nav"
             aria-labelledby="nested-list-subheader"
           >
-            <ListItemButton onClick={() => route.push('/vehicles/plate')}>
-              <SendIcon />
-              <ListItemText primary=" Consultar Veiculo Por Placa" />
-            </ListItemButton>
-            <ListItemButton onClick={() => route.push('/vehicles/color')}>
-              <SendIcon />
-              <ListItemText primary=" Consultar Veiculos por Cor" />
-            </ListItemButton>
             <ListItemButton onClick={() => route.push('/vehicles')}>
               <SendIcon />
               <ListItemText primary=" consultar Todos os Veiculos" />

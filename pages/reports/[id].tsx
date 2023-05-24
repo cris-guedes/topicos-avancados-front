@@ -2,14 +2,14 @@ import { GetServerSidePropsContext } from 'next'
 import ReportById from '../../Components/report/report'
 import { initializeApollo } from '../../shared/apollo/client'
 import { LOAD_REPORTS_BY_ID } from '../../shared/graphql/queries/reports'
-import { Report } from '../../src/domain/entities/report'
+import { LoadReportByIdView } from '../../src/domain/useCases/loadReportById/loadReportsByIdView'
 
 type Props = {
-  report: Report
+  report: LoadReportByIdView
 }
 
 function ReportDetails({ report }: Props) {
-  return <ReportById {...report} />
+  return <ReportById report={report} />
 }
 
 export default ReportDetails

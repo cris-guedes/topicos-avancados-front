@@ -2,10 +2,10 @@ import { GetServerSidePropsContext } from 'next'
 import VehicleByPlate from '../../../Components/vehicles/plate'
 import { initializeApollo } from '../../../shared/apollo/client'
 import { LOAD_VEHICLES_BY_PLATE_NUMBER } from '../../../shared/graphql/queries/vehicles'
-import { Vehicle } from '../../../src/domain/entities/vehicle'
+import { LoadVehicleByPlateNumberView } from '../../../src/domain/useCases/loadVehicleByPlateNumber/loadVehicleByPlateNumberView'
 
 type Props = {
-  vehicle: Vehicle
+  vehicle: LoadVehicleByPlateNumberView
 }
 
 function VehiclesPlate({ vehicle }: Props) {

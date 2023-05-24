@@ -1,5 +1,6 @@
 import ReportService from '../../../infra/providers/apis/api-core/report-resourse'
-import AddressService from '../../../infra/api-side/address-service'
+import AddressService from '../../../infra/providers/apis/api-side/address-service'
+
 import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/genericHttpRequest'
 
 export class LoadReportsByCityName {
@@ -9,23 +10,17 @@ export class LoadReportsByCityName {
   ) {}
 
   async execute(city: string) {
-    const addresses = await this.adressService.loadAddressByCity({ city })
+    const addresses = await this.adressService.loadByCity({ city })
     const adressesWithReports = addresses?.filter((address) => {
       if (address.report) return address
     })
-    console.log(addresses)
 
-    const reports = Promise.all(
-      adressesWithReports?.map(async (report) => {
-        try {
-          const { data } = await this.genericHttProvider.get(report.report)
-
-          return data
-        } catch (e) {
-          console.log(e)
-        }
+    const reports = await Promise.all(
+      adressesWithReports.map(async (report) => {
+        return await this.genericHttProvider.get(report.report)
       })
     )
-    return await reports
+
+    return reports
   }
 }

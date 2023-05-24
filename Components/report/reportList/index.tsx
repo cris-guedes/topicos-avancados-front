@@ -98,12 +98,12 @@ function ReportList() {
                         key={row.id.toString()}
                       >
                         {columns.map((column) => {
-                          const value = row[column.id]
+                          const value = row[column?.id]
                           return (
                             <TableCell key={column.id} align={column.align}>
                               {column.format && typeof value === 'number'
                                 ? column.format(value)
-                                : value}
+                                : value.toString()}
                             </TableCell>
                           )
                         })}

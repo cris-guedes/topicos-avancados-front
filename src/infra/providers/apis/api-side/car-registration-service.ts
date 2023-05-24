@@ -35,10 +35,14 @@ class CarRegistrationService {
   async loadByPlateNumber(
     params: Input.LoadByPlateNumber
   ): OutPut.LoadByPlateNumber {
-    const { data } = await httpSideApiProvider.get(
-      `${resourses.carRegistration}?plate${params.plate}`
-    )
-    return data
+    try {
+      const { data } = await httpSideApiProvider.get(
+        `${resourses.carRegistration}?plate=${params.plate}`
+      )
+      return data
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async delete(params: Input.DeleteById): OutPut.DeleteById {

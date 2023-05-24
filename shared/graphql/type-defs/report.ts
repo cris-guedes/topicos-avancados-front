@@ -10,6 +10,15 @@ export const reportType = gql`
     veiculoFurtado: String
   }
 
+  type ReportById {
+    id: String
+    dataOcorrencia: String
+    periodoOcorrencia: String
+    partes: Part
+    localOcorrencia: Address
+    veiculoFurtado: Vehicle
+  }
+
   input InputReport {
     dataOcorrencia: String
     periodoOcorrencia: String
@@ -21,7 +30,7 @@ export const reportType = gql`
   type Query {
     loadReportsByPeriod(period: String): [Report]
     loadReportsByCityName(city: String): [Report]
-    loadReportById(reportId: String): Report
+    loadReportById(reportId: String): ReportById
     loadReports: [Report]
     loadData: [Report]
   }

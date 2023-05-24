@@ -14,14 +14,41 @@ export const LOAD_REPORTS = gql`
 `
 
 export const LOAD_REPORTS_BY_ID = gql`
-  query LoadReportById($reportId: String) {
+  query LoadReports($reportId: String) {
     loadReportById(reportId: $reportId) {
       dataOcorrencia
       id
-      localOcorrencia
-      partes
+
       periodoOcorrencia
-      veiculoFurtado
+      localOcorrencia {
+        id
+        state
+        city
+        publicPlace
+        neighborhood
+        number
+        report
+      }
+      veiculoFurtado {
+        id
+        anoFabricacao
+        cor
+        fabricante
+        tipoVeiculo
+        modelo
+        emplacamento {
+          id
+          plate
+          state
+          city
+        }
+      }
+      partes {
+        id
+        name
+        email
+        involvement
+      }
     }
   }
 `

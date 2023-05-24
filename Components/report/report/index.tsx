@@ -1,79 +1,223 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
-import InboxIcon from '@mui/icons-material/Inbox'
-import DraftsIcon from '@mui/icons-material/Drafts'
-import { Report } from '../../../src/domain/entities/report'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  List,
+  ListItemButton,
+  ListItemText,
+  Typography
+} from '@mui/material'
+
+import SendIcon from '@mui/icons-material/Send'
+
 import { useRouter } from 'next/router'
+import { LoadReportByIdView } from '../../../src/domain/useCases/loadReportById/loadReportsByIdView'
+
 type Props = {
-  report: Report
+  report: LoadReportByIdView
 }
 
-export default function ReportById({
-  dataOcorrencia,
-  id,
-  localOcorrencia,
-  periodoOcorrencia,
-  veiculoFurtado,
-  partes
-}: Report) {
+function ReportById({ report }: Props) {
+  const {
+    dataOcorrencia,
+    id,
+    localOcorrencia,
+    partes,
+    periodoOcorrencia,
+    veiculoFurtado
+  } = report
+
+  const { anoFabricacao, cor, emplacamento, fabricante, tipoVeiculo, modelo } =
+    veiculoFurtado
+
+  const { city, plate, state } = emplacamento
+
   const route = useRouter()
+
   return (
-    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      {id && (
-        <nav aria-label="main mailbox folders">
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary={`${id}`} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary={`${dataOcorrencia}`} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary={`${localOcorrencia}`} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem
-              disablePadding
+    <div>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={'🔽'}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <SendIcon />
+          <Typography> Boletim</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <List
+            sx={{ width: '100%', bgcolor: 'background.paper' }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+            <ListItemButton>
+              <ListItemText primary={id} />
+            </ListItemButton>
+
+            <ListItemButton>
+              <ListItemText primary={dataOcorrencia} />
+            </ListItemButton>
+
+            <ListItemButton
               onClick={() => route.push(`/reports/period/${periodoOcorrencia}`)}
             >
-              <ListItemButton>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary={`${periodoOcorrencia}`} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary={`${veiculoFurtado}`} />
-              </ListItemButton>
-            </ListItem>
+              <ListItemText primary={periodoOcorrencia} />
+            </ListItemButton>
           </List>
-        </nav>
-      )}
-    </Box>
+        </AccordionDetails>
+        {localOcorrencia?.id && (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={'🔽'}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <SendIcon />
+              <Typography> Endereço</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List
+                sx={{ width: '100%', bgcolor: 'background.paper' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+              >
+                <ListItemButton>
+                  <ListItemText primary={localOcorrencia.id} />
+                </ListItemButton>
+                <ListItemButton
+                  onClick={() =>
+                    route.push(`/reports/city/${localOcorrencia.city}`)
+                  }
+                >
+                  <ListItemText primary={localOcorrencia.city} />
+                </ListItemButton>
+                <ListItemButton onClick={() => route.push('/vehicles')}>
+                  <ListItemText primary={localOcorrencia.neighborhood} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={localOcorrencia.number} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={localOcorrencia.publicPlace} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={localOcorrencia.state} />
+                </ListItemButton>
+              </List>
+            </AccordionDetails>
+          </Accordion>
+        )}
+        {veiculoFurtado?.id && (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={'🔽'}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <SendIcon />
+              <Typography> Veiculo </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List
+                sx={{ width: '100%', bgcolor: 'background.paper' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+              >
+                <ListItemButton>
+                  <ListItemText primary={veiculoFurtado.id} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={anoFabricacao} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText
+                    onClick={() => route.push(`/vehicles/cor/${cor}`)}
+                    primary={cor}
+                  />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={fabricante} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={modelo} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={tipoVeiculo} />
+                </ListItemButton>
+              </List>
+
+              {emplacamento?.id && (
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={'🔽'}
+                    aria-controls="panel2a-content"
+                    id="panel2a-header"
+                  >
+                    <SendIcon />
+                    <Typography> Emplacamento </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <List
+                      sx={{ width: '100%', bgcolor: 'background.paper' }}
+                      component="nav"
+                      aria-labelledby="nested-list-subheader"
+                    >
+                      <ListItemButton>
+                        <ListItemText primary={emplacamento.id} />
+                      </ListItemButton>
+                      <ListItemButton>
+                        <ListItemText primary={city} />
+                      </ListItemButton>
+                      <ListItemButton>
+                        <ListItemText
+                          onClick={() => route.push(`/vehicles/plate/${plate}`)}
+                          primary={plate}
+                        />
+                      </ListItemButton>
+                      <ListItemButton>
+                        <ListItemText primary={state} />
+                      </ListItemButton>
+                    </List>
+                  </AccordionDetails>
+                </Accordion>
+              )}
+            </AccordionDetails>
+          </Accordion>
+        )}
+
+        {partes?.id && (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={'🔽'}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <SendIcon />
+              <Typography> Partes </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List
+                sx={{ width: '100%', bgcolor: 'background.paper' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+              >
+                <ListItemButton>
+                  <ListItemText primary={partes.id} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={partes.email} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemText primary={partes.name} />
+                </ListItemButton>
+              </List>
+            </AccordionDetails>
+          </Accordion>
+        )}
+      </Accordion>
+    </div>
   )
 }
+
+export default ReportById

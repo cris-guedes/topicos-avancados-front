@@ -102,7 +102,7 @@ function ReportByPeriod({ reports }: Props) {
                             <TableCell key={column.id} align={column.align}>
                               {column.format && typeof value === 'number'
                                 ? column.format(value)
-                                : value}
+                                : value.toString()}
                             </TableCell>
                           )
                         })}

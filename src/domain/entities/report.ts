@@ -1,4 +1,4 @@
-import { InputAddress } from './addres'
+import { Address, InputAddress } from './addres'
 import { InputPart, Part } from './part'
 import { InputVehicle, Vehicle } from './vehicle'
 
@@ -17,4 +17,13 @@ export type InputReport = {
   partes?: InputPart
   localOcorrencia: InputAddress
   veiculoFurtado?: InputVehicle
+}
+
+export type LoadReportById = {
+  id: string
+  dataOcorrencia: string
+  periodoOcorrencia: string
+  partes: Part
+  localOcorrencia: Address
+  veiculoFurtado: Vehicle
 }
