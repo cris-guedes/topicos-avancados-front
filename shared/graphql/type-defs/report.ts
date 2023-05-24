@@ -5,7 +5,7 @@ export const reportType = gql`
     id: String
     dataOcorrencia: String
     periodoOcorrencia: String
-    partes: [String]
+    partes: String
     localOcorrencia: String
     veiculoFurtado: String
   }

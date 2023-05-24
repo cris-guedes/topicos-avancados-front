@@ -20,18 +20,22 @@ export class CreateReport {
     private readonly addressProvider: AddressService,
     private readonly partProvider: PartService,
     private readonly genericHttpRequest: GenericHttpRequest
-  ) {}
+  ) { }
 
   async execute(reportDTO: CreateReportDTO) {
+
     console.log(reportDTO)
     try {
+
+      this.validateReportDTO(reportDTO);
       const normalizedReportData = await this.normalizeReportData(reportDTO)
 
       const report = await this.createReport(normalizedReportData)
+
       console.log('Report', report.data)
       await this.updateRelations(report)
 
-      return report
+      return report.data
     } catch (e) {
       console.log(e)
     }
@@ -98,7 +102,9 @@ export class CreateReport {
       data: report
     }
   }
+
   private async normalizeReportData(reportDTO: CreateReportDTO) {
+
     const {
       localOcorrencia,
       partes,
@@ -109,16 +115,14 @@ export class CreateReport {
 
     const reportData = {
       dataOcorrencia,
-      localOcorrencia: localOcorrencia
-        ? await this.createAddress(localOcorrencia)
-        : null,
-      partes: partes ? await this.createParts(partes) : null,
+      localOcorrencia: await this.createAddress(localOcorrencia),
+      partes: await this.createParts(partes),
       periodoOcorrencia,
-      veiculoFurtado: veiculoFurtado
-        ? await this.createVehicle(veiculoFurtado)
-        : null
+      veiculoFurtado: await this.createVehicle(veiculoFurtado)
     }
+
     return reportData
+
   }
 
   private async updateRelations(report: {
@@ -131,16 +135,28 @@ export class CreateReport {
       veiculoFurtado?: string
     }
   }) {
+
     const address = {
       ...(await this.genericHttpRequest.get(report.data.localOcorrencia)),
       report: report.resourse
     }
+
     const vehicle = {
       ...(await this.genericHttpRequest.get(report.data.veiculoFurtado)),
       report: report.resourse
     }
+
     console.log('Adress', await this.addressProvider.updateAddress(address))
     console.log('Vehicle', await this.vehicleProvider.updateVehicle(vehicle))
     return
   }
+
+  private validateReportDTO(params: CreateReportDTO) {
+
+
+    throw new Error("Formato inválido");
+
+  }
+
 }
+
