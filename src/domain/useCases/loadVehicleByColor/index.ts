@@ -1,5 +1,5 @@
 import { LoadVehiclesByColor } from './loadVehicleByColor'
-import VehicleService from '../../../infra/api-core/vehicles-resourse'
+import VehicleService from '../../../infra/providers/apis/api-core/vehicles-resourse'
 
 const makeLoadVehicleByColor = () => {
   const vehicleProvider = new VehicleService()

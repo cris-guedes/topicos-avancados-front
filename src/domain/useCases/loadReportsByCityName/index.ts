@@ -1,6 +1,6 @@
 import { LoadReportsByCityName } from './loadReportsByCityName'
 import AddressService from '../../../infra/api-side/address-service'
-import GenericHttpRequest from '../../../infra/genericHttpRequest/genericHttpRequest'
+import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/genericHttpRequest'
 
 const makeLoadReportByCityName = () => {
   const adressService = new AddressService()

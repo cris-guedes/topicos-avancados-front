@@ -1,10 +1,10 @@
 import envs from '../../../../shared/envs'
-import ReportService from '../../../infra/api-core/report-resourse'
-import VehicleService from '../../../infra/api-core/vehicles-resourse'
+import ReportService from '../../../infra/providers/apis/api-core/report-resourse'
+import VehicleService from '../../../infra/providers/apis/api-core/vehicles-resourse'
 import AddressService from '../../../infra/api-side/address-service'
 import CarRegistrationService from '../../../infra/api-side/car-registration-service'
 import PartService from '../../../infra/api-side/part-service'
-import GenericHttpRequest from '../../../infra/genericHttpRequest/genericHttpRequest'
+import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/genericHttpRequest'
 import { InputAddress } from '../../entities/addres'
 import { InputCarRegistration } from '../../entities/car-registrations'
 import { InputPart } from '../../entities/part'
@@ -20,14 +20,12 @@ export class CreateReport {
     private readonly addressProvider: AddressService,
     private readonly partProvider: PartService,
     private readonly genericHttpRequest: GenericHttpRequest
-  ) { }
+  ) {}
 
   async execute(reportDTO: CreateReportDTO) {
-
     console.log(reportDTO)
     try {
-
-      this.validateReportDTO(reportDTO);
+      this.validateReportDTO(reportDTO)
       const normalizedReportData = await this.normalizeReportData(reportDTO)
 
       const report = await this.createReport(normalizedReportData)
@@ -104,7 +102,6 @@ export class CreateReport {
   }
 
   private async normalizeReportData(reportDTO: CreateReportDTO) {
-
     const {
       localOcorrencia,
       partes,
@@ -122,7 +119,6 @@ export class CreateReport {
     }
 
     return reportData
-
   }
 
   private async updateRelations(report: {
@@ -135,7 +131,6 @@ export class CreateReport {
       veiculoFurtado?: string
     }
   }) {
-
     const address = {
       ...(await this.genericHttpRequest.get(report.data.localOcorrencia)),
       report: report.resourse
@@ -152,11 +147,6 @@ export class CreateReport {
   }
 
   private validateReportDTO(params: CreateReportDTO) {
-
-
-    throw new Error("Formato inválido");
-
+    throw new Error('Formato inválido')
   }
-
 }
-

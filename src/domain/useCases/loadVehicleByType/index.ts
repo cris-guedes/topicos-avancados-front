@@ -1,5 +1,5 @@
 import { LoadVehiclesByType } from './loadVehicleByType'
-import VehicleService from '../../../infra/api-core/vehicles-resourse'
+import VehicleService from '../../../infra/providers/apis/api-core/vehicles-resourse'
 
 const makeLoadVehiclesByType = () => {
   const vehicleProvider = new VehicleService()

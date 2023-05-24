@@ -1,5 +1,5 @@
 import { UpdateReportById } from './updateReportById'
-import ReportService from '../../../infra/api-core/report-resourse'
+import ReportService from '../../../infra/providers/apis/api-core/report-resourse'
 
 const makeUpdateReportById = () => {
   const reportProvider = new ReportService()

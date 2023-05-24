@@ -1,4 +1,4 @@
-import VehicleService from '../../../infra/api-core/vehicles-resourse'
+import VehicleService from '../../../infra/providers/apis/api-core/vehicles-resourse'
 
 export class LoadVehiclesByType {
   constructor(private readonly vehicleProvider: VehicleService) {}
