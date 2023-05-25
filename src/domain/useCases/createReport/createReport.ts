@@ -30,8 +30,6 @@ export class CreateReport {
       const normalizedReportData = await this.normalizeReportData(reportDTO)
 
       const report = await this.createReport(normalizedReportData)
-
-      console.log('Report', report.data)
       await this.updateRelations(report)
 
       return report.data
@@ -198,7 +196,7 @@ export class CreateReport {
   })
   .catch((error) => {
 
-    console.error('Erro de validação:', error);
+    throw new Error('Erro de validação:', error);
     
   });
 

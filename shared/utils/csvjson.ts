@@ -1,4 +1,4 @@
-export const data = [
+export const rest = [
   {
     ANO_BO: 2023,
     NUM_BO: 170226,
@@ -112,7 +112,7 @@ export const data = [
     MARCA_CELULAR: ''
   }
 ]
-const rest = [
+export const data = [
   {
     ANO_BO: 2023,
     NUM_BO: 96,
