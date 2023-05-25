@@ -37,6 +37,6 @@ export const reportType = gql`
   type Mutation {
     createReport(report: InputReport): Report
     deleteReportById(reportId: String): Report
-    updateReportById(reportId: String): Report
+    updateReportById(reportId: String,data:InputReport): Report
   }
 `

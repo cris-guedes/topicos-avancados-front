@@ -4,6 +4,6 @@ export class DeleteReportById {
   constructor(private readonly reportProvider: ReportService) {}
 
   async execute(reportId: string) {
-    return await this.reportProvider.deleteReport({ id: reportId })
+    return await this.reportProvider.delete({ id: reportId })
   }
 }

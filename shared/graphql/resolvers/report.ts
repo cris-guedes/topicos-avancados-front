@@ -37,8 +37,8 @@ export const reportResolver = {
     deleteReportById(_, { reportId }) {
       return makeDeleteReportById().execute(reportId)
     },
-    updateReportById(__, { reportId }) {
-      return makeUpdateReportById().execute(reportId)
+    updateReportById(__, { reportId,data }) {
+      return makeUpdateReportById().execute(reportId,data)
     }
   }
 }
