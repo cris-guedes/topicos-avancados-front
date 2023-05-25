@@ -108,7 +108,9 @@ function VehicleList({ vehicle }: Props) {
                   .map((row: Vehicle) => {
                     return (
                       <TableRow
-                        onClick={() => route.push(`/vehicle/${row.id}`)}
+                        onClick={() =>
+                          route.push(`/vehicle/plate/${row.emplacamento.plate}`)
+                        }
                         hover
                         tabIndex={-1}
                         key={row.id.toString()}

@@ -9,7 +9,6 @@ import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/gene
 import { InputAddress } from '../../entities/addres'
 import { InputCarRegistration } from '../../entities/car-registrations'
 import { InputPart } from '../../entities/part'
-import { Report } from '../../entities/report'
 import { InputVehicle } from '../../entities/vehicle'
 import { CreateReportDTO } from './createReportDTO'
 

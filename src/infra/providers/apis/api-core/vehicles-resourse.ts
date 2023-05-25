@@ -24,8 +24,12 @@ class VehiclesService {
   }
 
   async load(): OutPut.Load {
-    const { data } = await httpCoreProvider.get(resourses.vehicle)
-    return data
+    try {
+      const { data } = await httpCoreProvider.get(resourses.vehicle)
+      return data
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async loadById(params: Input.LoadById): OutPut.LoadById {

@@ -4,6 +4,6 @@ export class LoadVehiclesByColor {
   constructor(private readonly vehicleProvider: VehicleService) {}
 
   async execute(color: string) {
-    return await this.vehicleProvider.loadVehiclesByColor({ color })
+    return await this.vehicleProvider.loadByColor({ color })
   }
 }
