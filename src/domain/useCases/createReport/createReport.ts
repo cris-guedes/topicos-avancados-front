@@ -9,7 +9,7 @@ import GenericHttpRequest from '../../../infra/providers/genericHttpRequest/gene
 import { InputAddress } from '../../entities/addres'
 import { InputCarRegistration } from '../../entities/car-registrations'
 import { InputPart } from '../../entities/part'
-import { Report } from '../../entities/report'
+import * as Yup from 'yup';
 import { InputVehicle } from '../../entities/vehicle'
 import { CreateReportDTO } from './createReportDTO'
 
@@ -26,7 +26,7 @@ export class CreateReport {
   async execute(reportDTO: CreateReportDTO) {
     console.log(reportDTO)
     try {
-      //this.validateReportDTO(reportDTO)
+      this.validateReportDTO(reportDTO)
       const normalizedReportData = await this.normalizeReportData(reportDTO)
 
       const report = await this.createReport(normalizedReportData)
@@ -153,7 +153,55 @@ export class CreateReport {
     return
   }
 
+
+  
   private validateReportDTO(params: CreateReportDTO) {
-    throw new Error('Formato inválido')
+
+
+
+    const schema = Yup.object().shape({
+      dataOcorrencia: Yup.string().required(),
+      periodoOcorrencia: Yup.string().required(),
+      partes: Yup.object().shape({
+        name: Yup.string().required(),
+        email: Yup.string().email().required(),
+        involvement: Yup.string().required(),
+      }),
+      localOcorrencia: Yup.object().shape({
+        state: Yup.string().required(),
+        city: Yup.string().required(),
+        publicPlace: Yup.string().required(),
+        neighborhood: Yup.string().required(),
+        number: Yup.string().required(),
+        report: Yup.string(),
+      }).required(),
+      veiculoFurtado: Yup.object().shape({
+        anoFabricacao: Yup.string().required(),
+        cor: Yup.string().required(),
+        fabricante: Yup.string().required(),
+        tipoVeiculo: Yup.string().required(),
+        modelo: Yup.string().required(),
+        emplacamento: Yup.object().shape({
+          state: Yup.string().required(),
+          plate: Yup.string().required(),
+          city: Yup.string().required(),
+        }).required(),
+        boletim: Yup.string(),
+      }),
+    });
+
+    schema.validate(params)
+  .then((validData) => {
+
+    console.log('Objeto válido:', validData);
+
+  })
+  .catch((error) => {
+
+    console.error('Erro de validação:', error);
+    
+  });
+
   }
+
 }
